@@ -2,12 +2,12 @@
   class Handler{
     private static $RESULT;
     private static $DATA;
-    public function __construct(Request $REQUEST){
-
-      $PATH = "version/" . $REQUEST::version() . "/" . $REQUEST::module() . "Request.php";
-      $FILE_EXIST = file_exists($PATH);
+    public function __construct(Request $REQUEST, $PATH = NULL){
+      $POINTER =  (is_null($PATH)) ? "version/" : $PATH;
+      $FILE_PATH = $POINTER . $REQUEST::version() . "/" . $REQUEST::module() . "Request.php";
+      $FILE_EXIST = file_exists($FILE_PATH);
       if($FILE_EXIST){
-        require_once($PATH);
+        require_once($FILE_PATH);
       }
       /*
         - If file exist, then include it.
@@ -22,7 +22,7 @@
       self::$RESULT
         = (!is_null($HANDLER))
         ? $HANDLER::request($REQUEST)
-        : new Result(false, "Incorrect module has been called.");
+        : new Result(false, "Incorrect file path.");
       self::$DATA
         = (self::$RESULT::success())
         ? $HANDLER::data()

@@ -34,9 +34,5 @@
       }
       return NULL;
     }
-
-    public static function json($KEY = NULL){
-      return json_encode($DATA);
-    }
   }
 ?>

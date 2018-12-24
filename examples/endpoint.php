@@ -21,7 +21,7 @@
     $DATA["DATA"]
   );
 
-  $HANDLER = new Handler($REQUEST);
+  $HANDLER = new Handler($REQUEST, "../version/");
   $RESPONSE = $HANDLER::response();
   /*
   * Create a Handler.
