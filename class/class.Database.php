@@ -39,8 +39,16 @@
     /* Returns a secure string for risky areas. */
 
 
-    public static function execute(string $QUERY){
-      @mysqli_query(self::$CONNECTION,$QUERY);
+    public static function execute(){
+      if(self::connected()){
+        $ARGS = func_get_args();
+        foreach ($ARGS as $ARG) {
+          is_string($ARG){
+            @mysqli_query(self::$CONNECTION,$QUERY);
+          }
+        }
+        return true;
+      } return false;
     }
     /* Only executes the query, good for heavy usage. */
 
