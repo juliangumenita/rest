@@ -2,33 +2,33 @@
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Headers: *');
 
-  spl_autoload_register(function($CLASS){
-    require_once(dirname(__FILE__) . "/class/class." . $CLASS . ".php");
+  spl_autoload_register(function($class){
+    require_once("../class/class.$class.php");
   });
 
   $JSON = file_get_contents("php://input");
-  $CONTROLLER = json_decode($JSON, true);
+  $controller = json_decode($JSON, true);
 
-  $DATA["MODULE"] = (isset($CONTROLLER["MODULE"])) ? $CONTROLLER["MODULE"] : NULL;
-  $DATA["METHOD"] = (isset($CONTROLLER["METHOD"])) ? $CONTROLLER["METHOD"] : NULL;
-  $DATA["VERSION"] = (isset($CONTROLLER["VERSION"])) ? $CONTROLLER["VERSION"] : NULL;
-  $DATA["DATA"] = (isset($CONTROLLER["DATA"])) ? $CONTROLLER["DATA"] : [];
+  $data["module"] = (isset($controller["module"])) ? $controller["module"] : NULL;
+  $data["method"] = (isset($controller["method"])) ? $controller["method"] : NULL;
+  $data["version"] = (isset($controller["version"])) ? $controller["version"] : NULL;
+  $data["data"] = (isset($controller["data"])) ? $controller["data"] : [];
 
-  $REQUEST = new Request(
-    $DATA["MODULE"],
-    $DATA["METHOD"],
-    $DATA["VERSION"],
-    $DATA["DATA"]
+  $request = new Request(
+    $data["module"],
+    $data["method"],
+    $data["version"],
+    $data["data"]
   );
 
-  $HANDLER = new Handler($REQUEST, "../version/");
-  $RESPONSE = $HANDLER::response();
+  $handler = new Handler($request, "../version/");
+  $response = $handler::response();
   /*
   * Create a Handler.
   * A Handler handles the requirement of a Controller class automatically
   * based on the version used and makes it easier to return a json or an array.
   */
-  echo $RESPONSE::json();
+  echo $response::json();
   /*
     Example response.
     - [RESULT]
@@ -36,6 +36,6 @@
     —>   [MESSAGE] : (string)
     —>   [CODE] : (string)
 
-    - [DATA] : (array)
+    - [data] : (array)
   */
 ?>

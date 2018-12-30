@@ -1,23 +1,23 @@
 <?php
   class Response{
-    private static $RESULT;
-    private static $DATA;
+    private static $result;
+    private static $data;
 
-    public function __construct($RESULT = [], $DATA = []){
-      self::$RESULT = $RESULT;
-      self::$DATA = $DATA;
+    public function __construct($result = [], $data = []){
+      self::$result = $result;
+      self::$data = $data;
   	}
 
     public static function result(){
-      return self::$RESULT;
+      return self::$result;
     }
     public static function data(){
-      return self::$DATA;
+      return self::$data;
     }
     public static function array(){
       return array(
-        "RESULT" => self::$RESULT,
-        "DATA" => self::$DATA
+        "result" => self::$result,
+        "data" => self::$data
       );
     }
     public static function json(){

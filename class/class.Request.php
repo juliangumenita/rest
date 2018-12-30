@@ -1,36 +1,36 @@
 <?php
   class Request{
-    private static $MODULE;
-    private static $METHOD;
-    private static $VERSION;
-    private static $DATA;
+    private static $module;
+    private static $method;
+    private static $version;
+    private static $data;
 
-    public function __construct($MODULE, $METHOD, $VERSION, $DATA = []){
-      self::$MODULE = $MODULE;
-      self::$METHOD = $METHOD;
-      self::$VERSION = $VERSION;
-      self::$DATA = $DATA;
+    public function __construct($module, $method, $version, $data = []){
+      self::$module = $module;
+      self::$method = $method;
+      self::$version = $version;
+      self::$data = $data;
   	}
 
     public static function module(){
-      return self::$MODULE;
+      return self::$module;
     }
     public static function method(){
-      return self::$METHOD;
+      return self::$method;
     }
     public static function version(){
-      return self::$VERSION;
+      return self::$version;
     }
 
-    public static function data($KEY = NULL){
-      if(is_null($KEY)){
-        return self::$DATA;
+    public static function data($key = NULL){
+      if(is_null($key)){
+        return self::$data;
       }
       else{
-        if(!isset(self::$DATA[$KEY])){
+        if(!isset(self::$data[$key])){
           return NULL;
         }
-        return self::$DATA[$KEY];
+        return self::$data[$key];
       }
       return NULL;
     }

@@ -1,13 +1,13 @@
 <?php
   class Controller extends Pointer{
-    public static function request(Request $REQUEST){
-      $METHOD = $REQUEST::method();
-      switch ($METHOD) {
+    public static function request(Request $request){
+      $method = $request::method();
+      switch ($method) {
         case 'Test':
-          return self::test($REQUEST);
+          return self::test($request);
         break;
         case 'Register':
-          return self::register($REQUEST);
+          return self::register($request);
         break;
         default:
           return new Result(false, "Incorrect method has been called.");
@@ -19,7 +19,7 @@
     * switch state call. The handler will fire it.
     */
 
-    private static function test(Request $REQUEST){
+    private static function test(Request $request){
       self::data(array("Awesome, the test method is working!"));
       return new Result(true);
     }
@@ -30,24 +30,24 @@
     *
     */
 
-    private static function register(Request $REQUEST){
-      $RESULT = self::control($REQUEST, array(
-        "USERNAME",
-        "PASSWORD",
-        "EMAIL"
+    private static function register(Request $request){
+      $result = self::control($request, array(
+        "username",
+        "password",
+        "email"
       ));
       /*
       * self::control will take the Request object as the first parameter.
       * The seconda parameter will be an array to check if a key is set.
       */
 
-      if($RESULT::success()){
+      if($result::success()){
 
         self::data(array(
-          "TOKEN" => "ExKjEQvcNFbsneOVGU7f"
+          "token" => "ExKjEQvcNFbsneOVGU7f"
         ));
-        $RESULT::message("The user registered successfully.");
-        $RESULT::code("REGISTER_SUCESSFUL");
+        $result::message("The user registered successfully.");
+        $result::code("REGISTER_SUCESSFUL");
         /*
         * self::data will set the response that is wanted to be displayed.
         */
@@ -55,7 +55,7 @@
       }
 
       /* If an error occures, the result will be an error automatically. */
-      return $RESULT;
+      return $result;
     }
   }
 ?>

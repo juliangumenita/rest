@@ -1,21 +1,21 @@
 <?php
   class Pointer{
-    public static function request(Request $REQUEST){
-      $METHOD = $REQUEST::method();
-      switch ($METHOD) {
+    public static function request(Request $request){
+      $method = $request::method();
+      switch ($method) {
         default:
           return new Result(false, "Incorrect method has been called.");
         break;
       }
     }
 
-    public static $DATA;
-    public static function data($SET = NULL){
-      if(!is_null($SET)){
-        self::$DATA = $SET;
-        return $SET;
+    public static $data;
+    public static function data($set = NULL){
+      if(!is_null($set)){
+        self::$data = $set;
+        return $set;
       }
-      return self::$DATA;
+      return self::$data;
     }
 
     /*
@@ -25,10 +25,10 @@
     *
     */
 
-    public static function control(Request $REQUEST, $REQUIRED_KEYS = []){
-      if(!empty($REQUIRED_KEYS)){
-        foreach ($REQUIRED_KEYS as $KEY) {
-          if(is_null($REQUEST::data($KEY))){
+    public static function control(Request $request, $requiredKeys = []){
+      if(!empty($requiredKeys)){
+        foreach ($requiredKeys as $key) {
+          if(is_null($request::data($key))){
             return new Result(false, "Missing keys.");
           }
         }

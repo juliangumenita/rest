@@ -1,31 +1,31 @@
 <?php
   class Handler{
-    private static $RESULT;
-    private static $DATA;
-    public function __construct(Request $REQUEST, $PATH = NULL){
-      $POINTER =  (is_null($PATH)) ? "version/" : $PATH;
-      $FILE_PATH = $POINTER . $REQUEST::version() . "/" . $REQUEST::module() . "Request.php";
-      $FILE_EXIST = file_exists($FILE_PATH);
-      if($FILE_EXIST){
-        require_once($FILE_PATH);
+    private static $result;
+    private static $data;
+    public function __construct(Request $request, $path = NULL){
+      $pointer =  (is_null($path)) ? "version/" : $path;
+      $filePath = $pointer . $request::version() . "/" . $request::module() . "Request.php";
+      $fileExists = file_exists($filePath);
+      if($fileExists){
+        require_once($filePath);
       }
       /*
         - If file exist, then include it.
         - Every main {moduleName}Request.php file is a Controller class.
       */
 
-      $DATA = $REQUEST::data();
-      $HANDLER
-        = ($FILE_EXIST)
+      $data = $request::data();
+      $handler
+        = ($fileExists)
         ? new Controller
         : NULL;
-      self::$RESULT
-        = (!is_null($HANDLER))
-        ? $HANDLER::request($REQUEST)
+      self::$result
+        = (!is_null($handler))
+        ? $handler::request($request)
         : new Result(false, "Incorrect file path.");
-      self::$DATA
-        = (self::$RESULT::success())
-        ? $HANDLER::data()
+      self::$data
+        = (self::$result::success())
+        ? $handler::data()
         : NULL;
         /*
           - If module exists in defined version, require it.
@@ -36,8 +36,8 @@
 
     public static function response(){
       return new Response(
-        self::$RESULT::array(),
-        self::$DATA
+        self::$result::array(),
+        self::$data
       );
     }
   }

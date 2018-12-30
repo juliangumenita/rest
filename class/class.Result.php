@@ -1,42 +1,42 @@
 <?php
   class Result{
-    private static $SUCCESS;
-    private static $CODE;
-    private static $MESSAGE;
+    private static $success;
+    private static $code;
+    private static $message;
 
-    public function __construct($SUCCESS = false, $MESSAGE = NULL, $CODE = NULL){
-      self::$SUCCESS = $SUCCESS;
-      self::$MESSAGE = $MESSAGE;
-      self::$CODE = $CODE;
+    public function __construct($success = false, $message = NULL, $code = NULL){
+      self::$success = $success;
+      self::$message = $message;
+      self::$code = $code;
   	}
 
-    public static function success($SET = NULL){
-      if(!is_null($SET)){
-        self::$SUCCESS = $SET;
-        return $SET;
+    public static function success($set = NULL){
+      if(!is_null($set)){
+        self::$success = $set;
+        return $set;
       }
-      return self::$SUCCESS;
+      return self::$success;
     }
-    public static function message($SET = NULL){
-      if(!is_null($SET)){
-        self::$MESSAGE = $SET;
-        return $SET;
+    public static function message($set = NULL){
+      if(!is_null($set)){
+        self::$message = $set;
+        return $set;
       }
-      return self::$MESSAGE;
+      return self::$message;
     }
-    public static function code($SET = NULL){
-      if(!is_null($SET)){
-        self::$CODE = $SET;
-        return $SET;
+    public static function code($set = NULL){
+      if(!is_null($set)){
+        self::$code = $set;
+        return $set;
       }
-      return self::$CODE;
+      return self::$code;
     }
 
     public static function array(){
       return array(
-        "SUCCESS" => self::$SUCCESS,
-        "CODE" => self::$CODE,
-        "MESSAGE" => self::$MESSAGE
+        "success" => self::$success,
+        "code" => self::$code,
+        "message" => self::$message
       );
     }
   }
