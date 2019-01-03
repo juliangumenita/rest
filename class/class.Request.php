@@ -22,17 +22,14 @@
       return self::$version;
     }
 
-    public static function data($key = NULL){
+    public static function data($key = null){
       if(is_null($key)){
         return self::$data;
       }
-      else{
-        if(!isset(self::$data[$key])){
-          return NULL;
-        }
-        return self::$data[$key];
+      if(!isset(self::$data[$key])){
+        return null;
       }
-      return NULL;
+      return self::$data[$key];
     }
   }
 ?>

@@ -9,9 +9,9 @@
   $JSON = file_get_contents("php://input");
   $controller = json_decode($JSON, true);
 
-  $data["module"] = (isset($controller["module"])) ? $controller["module"] : NULL;
-  $data["method"] = (isset($controller["method"])) ? $controller["method"] : NULL;
-  $data["version"] = (isset($controller["version"])) ? $controller["version"] : NULL;
+  $data["module"] = (isset($controller["module"])) ? $controller["module"] : null;
+  $data["method"] = (isset($controller["method"])) ? $controller["method"] : null;
+  $data["version"] = (isset($controller["version"])) ? $controller["version"] : null;
   $data["data"] = (isset($controller["data"])) ? $controller["data"] : [];
 
   $request = new Request(

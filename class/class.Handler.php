@@ -2,9 +2,9 @@
   class Handler{
     private static $result;
     private static $data;
-    public function __construct(Request $request, $path = NULL){
+    public function __construct(Request $request, $path = null, $slug = null){
       $pointer =  (is_null($path)) ? "version/" : $path;
-      $filePath = $pointer . $request::version() . "/" . $request::module() . "Request.php";
+      $filePath = $pointer . $request::version() . "/" . $request::module() . "$slug.php";
       $fileExists = file_exists($filePath);
       if($fileExists){
         require_once($filePath);
@@ -18,7 +18,7 @@
       $handler
         = ($fileExists)
         ? new Controller
-        : NULL;
+        : null;
       self::$result
         = (!is_null($handler))
         ? $handler::request($request)
@@ -26,7 +26,7 @@
       self::$data
         = (self::$result::success())
         ? $handler::data()
-        : NULL;
+        : null;
         /*
           - If module exists in defined version, require it.
           - If Module Handler set, execute it and get the result.

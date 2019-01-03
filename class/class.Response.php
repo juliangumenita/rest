@@ -11,8 +11,14 @@
     public static function result(){
       return self::$result;
     }
-    public static function data(){
-      return self::$data;
+    public static function data($key = null){
+      if(is_null($key)){
+        return self::$data;
+      }
+      if(!isset(self::$data[$key])){
+        return null;
+      }
+      return self::$data[$key];
     }
     public static function array(){
       return array(

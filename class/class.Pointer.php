@@ -10,7 +10,7 @@
     }
 
     public static $data;
-    public static function data($set = NULL){
+    public static function data($set = null){
       if(!is_null($set)){
         self::$data = $set;
         return $set;

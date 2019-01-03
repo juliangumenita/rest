@@ -1,39 +1,39 @@
 <?php
   class Database{
-    private static $_HOST = "localhost";
-    private static $_USERNAME = "root";
-    private static $_PASSWORD = "";
-    private static $_DATABASE = "database";
+    private static $host = "localhost";
+    private static $username = "root";
+    private static $password = "";
+    private static $database = "database";
     /* You can change connection strings here. */
 
 
-    private static $CONNECTED = false;
-    private static $CONNECTION;
+    private static $connected = false;
+    private static $connection;
 
 
     public function __construct(){
-      self::$CONNECTION = @mysqli_connect(
-        self::$_HOST,
-        self::$_USERNAME,
-        self::$_PASSWORD,
-        self::$_DATABASE
+      self::$connection = @mysqli_connect(
+        self::$host,
+        self::$username,
+        self::$password,
+        self::$database
       );
-      if(!mysqli_connect_errno(self::$CONNECTION)){
-        mysqli_set_charset(self::$CONNECTION, "utf8");
+      if(!mysqli_connect_errno(self::$connection)){
+        mysqli_set_charset(self::$connection, "utf8");
         /* Sets the default charset to UTF8. */
-        self::$CONNECTED = true;
+        self::$connected = true;
       }
   	}
 
 
     public static function connected(){
-      return self::$CONNECTED;
+      return self::$connected;
     }
 
 
-    public static function secure($STRING){
+    public static function secure($string){
       if(self::connected()){
-        return @mysqli_real_escape_string(self::$CONNECTION, $STRING);
+        return @mysqli_real_escape_string(self::$connection, $string);
       } return false;
     }
     /* Returns a secure string for risky areas. */
@@ -41,10 +41,10 @@
 
     public static function execute(){
       if(self::connected()){
-        $ARGS = func_get_args();
-        foreach ($ARGS as $ARG) {
-          is_string($ARG){
-            @mysqli_query(self::$CONNECTION,$QUERY);
+        $args = func_get_args();
+        foreach ($args as $arg) {
+          is_string($arg){
+            @mysqli_query(self::$connection,$query);
           }
         }
         return true;
@@ -52,60 +52,63 @@
     }
     /* Only executes the query, good for heavy usage. */
 
-    private static function returnCount(string $QUERY){
-      $RESULT = @mysqli_query(self::$CONNECTION,$QUERY);
-      if($RESULT){
-        $COUNT = mysqli_num_rows($RESULT);
-        return $COUNT;
+    private static function returnCount(string $query){
+      $result = @mysqli_query(self::$connection,$query);
+      if($result){
+        $count = mysqli_num_rows($result);
+        return $count;
       } return 0;
     }
-    public static function count(string $QUERY){
+    public static function count(string $query){
       if(self::connected()){
-        return self::returnCount($QUERY);
+        return self::returnCount($query);
       } return false;
     }
     /* Returns the count of rows; if not successful, returns 0. */
 
 
-    private static function returnFetch(string $QUERY){
-      $RESULT = @mysqli_query(self::$CONNECTION,$QUERY);
-      if($RESULT){
-        $ROW = @mysqli_fetch_array($RESULT,MYSQLI_ASSOC);
-        return $ROW;
+    private static function returnFetch(string $query){
+      $result = @mysqli_query(self::$connection,$query);
+      if($result){
+        $row = @mysqli_fetch_array($result,MYSQLI_ASSOC);
+        return $row;
       } return NULL;
     }
-    public static function fetch(string $QUERY){
+    public static function fetch(string $query, $key = null){
       if(self::connected()){
-        return self::returnFetch($QUERY);
+        if(!is_null($key)){
+          return self::returnFetch($query)[$key];
+        }
+        return self::returnFetch($query);
       } return false;
     }
     /* Fetches only one row from query. */
 
 
-    private static function returnSuccess(string $QUERY){
-      return @mysqli_query(self::$CONNECTION,$QUERY);
+    private static function returnSuccess(string $query){
+      return @mysqli_query(self::$connection,$query);
     }
-    public static function success(string $QUERY){
+    public static function success(string $query){
       if(self::connected()){
-        return self::returnSuccess($QUERY);
+        return self::returnSuccess($query);
       } return false;
     }
     /* Returns true if the query successfully executed. */
 
 
-    private static function returnMultiple(string $QUERY){
-      $RESULT = @mysqli_query(self::$CONNECTION,$QUERY);
-      if($RESULT){
-        $ARRAY = [];
-        while($ROW = @mysqli_fetch_array($RESULT,MYSQLI_ASSOC)) {
-          @array_push($ARRAY, $ROW);
+    private static function returnMultiple(string $query){
+      $result = @mysqli_query(self::$connection,$query);
+      if($result){
+        $array = [];
+        while($row = @mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+          @array_push($array, $row);
         }
-        return $ARRAY;
+        return $array;
       } return false;
     }
-    public static function multiple(string $QUERY){
+    public static function multiple(string $query){
       if(self::connected()){
-        return self::returnMultiple($QUERY);
+        return self::returnMultiple($query);
       } return false;
     }
     /* Fetches multiple rows from query and puts them into an array. */
