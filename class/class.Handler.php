@@ -3,6 +3,9 @@
     private static $result;
     private static $data;
     public function __construct(Request $request, $path = null, $slug = null){
+      Reporter::init();
+      /* Initialize the Reporter. */
+
       $pointer =  (is_null($path)) ? "version/" : $path;
       $filePath = $pointer . $request::version() . "/" . $request::module() . "$slug.php";
       $fileExists = file_exists($filePath);
@@ -27,11 +30,14 @@
         = (self::$result::success())
         ? $handler::data()
         : null;
-        /*
-          - If module exists in defined version, require it.
-          - If Module Handler set, execute it and get the result.
-          - If the result is successful, get the data from the Handler.
-        */
+      /*
+        - If module exists in defined version, require it.
+        - If Module Handler set, execute it and get the result.
+        - If the result is successful, get the data from the Handler.
+      */
+
+      Reporter::catch();
+      /* Catch all of the errors. */
     }
 
     public static function response(){
