@@ -1,20 +1,20 @@
 <?php
-  spl_autoload_register(function($CLASS){
-    require_once("../class/class." . $CLASS . ".php");
+  spl_autoload_register(function($class){
+    require_once("../class/class.$class.php");
   });
   /*
     It is better to initialize a spl_autoload_register in the base execution
     file in order to make every file accessible trough here.
   */
 
-  $REQUEST = new Request(
+  $request = new Request(
     "Test",
     "Register",
     "1.0",
     [
-      "USERNAME" => "{email}",
-      "PASSWORD" => "{password}",
-      "EMAIL" => "{email}"
+      "username" => "{email}",
+      "password" => "{password}",
+      "email" => "{email}"
     ]
   );
   /*
@@ -32,14 +32,14 @@
         * This, represents the data that will sent as a request.
   */
 
-  $HANDLER = new Handler($REQUEST, "../version/");
+  $handler = new Handler($request, "../version/");
   /*
   * Create a Handler.
   * A Handler handles the requirement of a Controller class automatically
   * based on the version used and makes it easier to return a json or an array.
   */
-  $RESPONSE = $HANDLER::response();
-  print_r($RESPONSE::array());
+  $response = $handler::response();
+  print_r($response::array());
   /*
     Example response.
     - [RESULT]
