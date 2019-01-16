@@ -43,8 +43,8 @@
       if(self::connected()){
         $args = func_get_args();
         foreach ($args as $arg) {
-          is_string($arg){
-            @mysqli_query(self::$connection,$query);
+          if(is_string($arg)){
+            @mysqli_query(self::$connection,$arg);
           }
         }
         return true;
@@ -99,12 +99,8 @@
     private static function returnMultiple(string $query){
       $result = @mysqli_query(self::$connection,$query);
       if($result){
-        $array = [];
-        while($row = @mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-          @array_push($array, $row);
-        }
-        return $array;
-      } return false;
+        return @mysqli_fetch_all($result,MYSQLI_ASSOC);
+      } return [];
     }
     public static function multiple(string $query){
       if(self::connected()){
