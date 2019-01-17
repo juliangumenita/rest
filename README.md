@@ -2,6 +2,37 @@
 
 This is an example structure of a hybrid rest api both for app and web app usage purposes.
 
+### Creating A Method
+
+Create a {module}.php named Controller object extended to Pointer object and create your base like the following.
+
+```
+class Controller extends Pointer{
+
+  public static function request(Request $request){
+    $method = $request::method();
+    switch ($method) {
+      case 'Test':
+        return self::test($request);
+      default:
+        return new Result(false, "Incorrect method has been called.");
+    }
+  }
+  /*
+  * A handler activates the request function, you can override it. 
+  */
+
+  private static function test(Request $request){
+    self::data("Awesome, the test method is working!");
+    return new Result(true);
+  }
+  /*
+  * A method always should return a Result object.
+  */
+  
+}
+```
+
 ### Creating A Request
 
 ```
