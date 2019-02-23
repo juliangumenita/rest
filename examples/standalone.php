@@ -1,6 +1,6 @@
 <?php
   spl_autoload_register(function($class){
-    require_once("../class/class.$class.php");
+    require_once("../class/$class.php");
   });
   /*
     It is better to initialize a spl_autoload_register in the base execution

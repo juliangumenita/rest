@@ -3,7 +3,7 @@
   header('Access-Control-Allow-Headers: *');
 
   spl_autoload_register(function($class){
-    require_once("../class/class.$class.php");
+    require_once("../class/$class.php");
   });
 
   $JSON = file_get_contents("php://input");
